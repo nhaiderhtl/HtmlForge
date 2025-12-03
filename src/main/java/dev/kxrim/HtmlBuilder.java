@@ -63,6 +63,20 @@ public class HtmlBuilder {
             .append("</button>\n");
     }
 
+    public void addDiv(String content) {
+        html.append("<div>")
+            .append(content)
+            .append("</div>\n");
+    }
+
+    public void addDiv(String content, String className) {
+        html.append("<div class=\"")
+            .append(className)
+            .append("\">")
+            .append(content)
+            .append("</div>\n");
+    }
+
     public void build() {
         head.append(html);
         head.append("</body>\n");
