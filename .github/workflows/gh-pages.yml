@@ -16,7 +16,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
@@ -26,6 +26,9 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean compile
+
+      - name: Run tests
+        run: mvn test
 
       - name: Generate HTML
         run: mvn exec:java -Dexec.mainClass="dev.kxrim.Main"
@@ -37,4 +40,3 @@ jobs:
           publish_dir: ./generated
           publish_branch: gh-pages
           force_orphan: true
-
