@@ -3,6 +3,10 @@ package dev.kxrim;
 import dev.kxrim.elements.*;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +20,7 @@ public class HtmlBuilder {
     private final String lang;
     private final String charset;
     private final String viewport;
+    private Theme currentTheme;
     private static final Path OUTPUT_DIR = Paths.get("generated");
     private static final Path ASSETS_DIR = OUTPUT_DIR.resolve("assets");
 
@@ -47,6 +52,11 @@ public class HtmlBuilder {
         head.append("<meta charset=\"").append(charset).append("\">\n");
         head.append("<meta name=\"viewport\" content=\"").append(viewport).append("\">\n");
         head.append("<title>").append(title).append("</title>\n");
+
+        if (currentTheme != null) {
+            head.append("<link rel=\"stylesheet\" href=\"assets/style.css\">\n");
+        }
+
         head.append("</head>\n");
         head.append("<body>\n");
     }
@@ -137,6 +147,90 @@ public class HtmlBuilder {
         return addElement(new HorizontalRule());
     }
 
+    public HtmlBuilder useTheme(Theme theme) {
+        this.currentTheme = theme;
+        System.out.println("Theme set to: " + theme.getThemeName());
+        return this;
+    }
+
+    private void applyTheme() {
+        if (currentTheme == null) {
+            return;
+        }
+
+        try {
+            Files.createDirectories(ASSETS_DIR);
+
+            String css = fetchThemeCssFromJson(currentTheme);
+
+            if (css != null) {
+                Path cssDestination = ASSETS_DIR.resolve("style.css");
+                Files.writeString(cssDestination, css);
+                System.out.println("Applied theme from remote: " + currentTheme.getThemeName());
+            } else {
+                Path themeCssSource = Paths.get(currentTheme.getStylePath());
+                if (Files.exists(themeCssSource)) {
+                    Path cssDestination = ASSETS_DIR.resolve("style.css");
+                    Files.copy(themeCssSource, cssDestination, StandardCopyOption.REPLACE_EXISTING);
+                    System.out.println("Applied theme from local files: " + currentTheme.getThemeName());
+                } else {
+                    System.err.println("Theme CSS not found locally or remotely");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error applying theme: " + e.getMessage());
+        }
+    }
+
+    private String fetchThemeCssFromJson(Theme theme) {
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(Theme.getThemeJsonUrl()))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                String jsonResponse = response.body();
+                return extractCssFromJson(jsonResponse, theme.name());
+            }
+        } catch (Exception e) {
+            System.out.println("Could not fetch theme from remote, trying local files...");
+        }
+        return null;
+    }
+
+    private String extractCssFromJson(String json, String themeName) {
+        try {
+            String themeKey = "\"" + themeName + "\"";
+            int themeStart = json.indexOf(themeKey);
+            if (themeStart == -1) return null;
+
+            int cssStart = json.indexOf("\"css\":", themeStart);
+            if (cssStart == -1) return null;
+
+            int cssValueStart = json.indexOf("\"", cssStart + 6) + 1;
+
+            int cssValueEnd = cssValueStart;
+            while (cssValueEnd < json.length()) {
+                if (json.charAt(cssValueEnd) == '"' && json.charAt(cssValueEnd - 1) != '\\') {
+                    break;
+                }
+                cssValueEnd++;
+            }
+
+            String cssContent = json.substring(cssValueStart, cssValueEnd);
+            return cssContent.replace("\\n", "\n")
+                           .replace("\\\"", "\"")
+                           .replace("\\\\", "\\");
+        } catch (Exception e) {
+            System.err.println("Error parsing JSON: " + e.getMessage());
+            return null;
+        }
+    }
+
 
     public HtmlBuilder copyAssets(String sourceDir) {
         try {
@@ -196,6 +290,10 @@ public class HtmlBuilder {
     }
 
     public void build() {
+        applyTheme();
+
+        buildHead();
+
         head.append(html);
         head.append("</body>\n");
         head.append("</html>");
