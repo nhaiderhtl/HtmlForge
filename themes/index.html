@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HtmlForge Themes - Style Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #0f0f23;
+            min-height: 100vh;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(99, 102, 241, 0.3), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(168, 85, 247, 0.2), transparent 50%);
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(5%, 5%) rotate(120deg); }
+            66% { transform: translate(-5%, 5%) rotate(240deg); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            padding: 80px 20px 60px;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: clamp(2.5em, 8vw, 4.5em);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            letter-spacing: -2px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        header p {
+            font-size: clamp(1.1em, 3vw, 1.4em);
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 550px), 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+            padding: 0 20px;
+        }
+
+        .theme-card {
+            background: rgba(30, 30, 60, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: cardFloat 1s ease-out both;
+        }
+
+        .theme-card:nth-child(1) { animation-delay: 0.1s; }
+        .theme-card:nth-child(2) { animation-delay: 0.2s; }
+        .theme-card:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes cardFloat {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .theme-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(102, 126, 234, 0.5);
+            box-shadow:
+                0 20px 60px rgba(102, 126, 234, 0.3),
+                0 0 0 1px rgba(102, 126, 234, 0.2);
+        }
+
+        .theme-preview {
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-preview-content {
+            padding: 30px;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .theme-info {
+            padding: 35px;
+        }
+
+        .theme-info h2 {
+            color: #ffffff;
+            font-size: 2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .theme-info p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.05em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .theme-tags {
+            margin-bottom: 20px;
+        }
+
+        .theme-tag {
+            display: inline-block;
+            background: rgba(102, 126, 234, 0.2);
+            color: #a5b4fc;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .theme-tag:hover {
+            background: rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .code-block {
+            background: rgba(15, 15, 35, 0.8);
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'JAVA';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 0.7em;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
+        }
+
+        .code-block .keyword {
+            color: #ff79c6;
+        }
+
+        .code-block .enum {
+            color: #50fa7b;
+        }
+
+        .code-block .method {
+            color: #8be9fd;
+        }
+
+        .instructions {
+            background: rgba(30, 30, 60, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 0 20px 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .instructions h2 {
+            color: #ffffff;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        .instructions ol {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 2;
+            padding-left: 25px;
+        }
+
+        .instructions li {
+            margin-bottom: 12px;
+        }
+
+        .instructions code {
+            background: rgba(102, 126, 234, 0.2);
+            color: #a5b4fc;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            font-family: 'Monaco', monospace;
+        }
+
+        footer {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 60px;
+            padding: 40px 20px 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            margin: 8px 0;
+        }
+
+        footer a {
+            color: #a5b4fc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid transparent;
+        }
+
+        footer a:hover {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        /* Codix Preview Styles */
+        .codix-preview {
+            background: #0d1117;
+            color: #00ff41;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+
+        .codix-preview h1 {
+            color: #00ff41;
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .codix-preview p {
+            color: #c9d1d9;
+            margin: 12px 0;
+        }
+
+        .codix-preview button {
+            background: #238636;
+            color: white;
+            border: 2px solid #00ff41;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-family: 'Consolas', monospace;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .codix-preview .demo-div {
+            background: #161b22;
+            border-left: 4px solid #00ff41;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 6px;
+        }
+
+        /* Minimal Preview Styles */
+        .minimal-preview {
+            background: #ffffff;
+            color: #333;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto;
+        }
+
+        .minimal-preview h1 {
+            color: #111;
+            border-bottom: 3px solid #111;
+            padding-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .minimal-preview p {
+            color: #555;
+            margin: 12px 0;
+        }
+
+        .minimal-preview button {
+            background: #111;
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .minimal-preview .demo-div {
+            background: #fafafa;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            .theme-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .instructions {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>HtmlForge Themes</h1>
+            <p>Beautiful, production-ready themes for your HtmlBuilder projects</p>
+        </header>
+
+        <div class="instructions">
+            <h2>How to Use Themes</h2>
+            <ol>
+                <li>Browse the available themes below</li>
+                <li>Choose a theme that fits your project style</li>
+                <li>Copy the code example from your chosen theme</li>
+                <li>Use it in your HtmlBuilder code with <code>builder.useTheme(Theme.THEME_NAME)</code></li>
+                <li>Build your HTML and enjoy your beautifully styled page</li>
+            </ol>
+        </div>
+
+        <div class="theme-grid">
+            <!-- Codix Theme -->
+            <div class="theme-card">
+                <div class="theme-preview">
+                    <div class="theme-preview-content codix-preview">
+                        <h1>Codix Theme</h1>
+                        <p>A dark developer-focused theme with terminal aesthetics</p>
+                        <button>Click Me</button>
+                        <div class="demo-div">
+                            <p>Styled div with green accent border</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-info">
+                    <h2>Codix</h2>
+                    <p>Terminal vibes meet modern design. Dark background with that signature neon green glow developers love. Works great for portfolios, docs, or any tech project where you want that hacker aesthetic.</p>
+                    <div class="theme-tags">
+                        <span class="theme-tag">Dark</span>
+                        <span class="theme-tag">Developer</span>
+                        <span class="theme-tag">Terminal</span>
+                    </div>
+                    <div class="code-block">
+<span class="keyword">builder</span>.<span class="method">useTheme</span>(<span class="enum">Theme.CODIX</span>);
+                    </div>
+                </div>
+            </div>
+
+            <!-- Minimal Theme -->
+            <div class="theme-card">
+                <div class="theme-preview">
+                    <div class="theme-preview-content minimal-preview">
+                        <h1>Minimal Theme</h1>
+                        <p>Clean and simple design for any project</p>
+                        <button>Click Me</button>
+                        <div class="demo-div">
+                            <p>Subtle styled div element</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="theme-info">
+                    <h2>Minimal</h2>
+                    <p>Clean, simple, no BS. Just good typography and lots of whitespace. If you want your content to do the talking without fancy colors getting in the way, this is it.</p>
+                    <div class="theme-tags">
+                        <span class="theme-tag">Light</span>
+                        <span class="theme-tag">Clean</span>
+                        <span class="theme-tag">Simple</span>
+                    </div>
+                    <div class="code-block">
+<span class="keyword">builder</span>.<span class="method">useTheme</span>(<span class="enum">Theme.MINIMAL</span>);
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>Want to Contribute Your Own Theme?</h2>
+            <ol>
+                <li>Fork the <a href="https://github.com/KerYagciHTL/HtmlForge" target="_blank" style="color: #667eea; text-decoration: none; border-bottom: 1px solid #667eea;">HtmlForge repository</a></li>
+                <li>Create a new folder in <code>themes/YourThemeName/</code></li>
+                <li>Add your <code>style.css</code> file with your custom styles</li>
+                <li>Update the <code>themes.json</code> file with your theme's CSS and metadata</li>
+                <li>Add your theme to the <code>Theme</code> enum in Java</li>
+                <li>Submit a pull request with your amazing theme!</li>
+            </ol>
+            <p style="margin-top: 20px; color: rgba(255, 255, 255, 0.7); font-size: 1.05em;">
+                <strong>Note:</strong> Themes are now fetched dynamically from the JSON file, so users can access them without downloading the repository!
+            </p>
+        </div>
+
+        <footer>
+            <p><a href="https://github.com/KerYagciHTL/HtmlForge" target="_blank">View on GitHub</a> • <a href="themes.json" target="_blank">Browse themes.json</a></p>
+        </footer>
+    </div>
+</body>
+</html>
+
