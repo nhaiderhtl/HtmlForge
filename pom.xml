@@ -24,7 +24,7 @@
     <developers>
         <developer>
             <id>keryagcihtl</id>
-            <name>KerYagci</name>
+            <name>KerYagciHTL</name>
             <url>https://github.com/KerYagciHTL</url>
         </developer>
         <developer>
@@ -67,7 +67,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.1</version>
                 <configuration>
-                    <mainClass>io.github.keryagcihtl</mainClass>
+                    <mainClass>dev.kxrim.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
