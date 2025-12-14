@@ -6,7 +6,6 @@
   [![Maven Central](https://img.shields.io/maven-central/v/io.github.keryagcihtl/htmlforge?style=for-the-badge&logo=apache-maven&logoColor=white)](https://central.sonatype.com/artifact/io.github.keryagcihtl/htmlforge)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
   [![Java Version](https://img.shields.io/badge/Java-21%2B-orange?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
-  [![Build Status](https://img.shields.io/github/actions/workflow/status/KerYagciHTL/HtmlForge/maven.yml?style=for-the-badge&logo=github-actions&logoColor=white)](https://github.com/KerYagciHTL/HtmlForge/actions)
   
   [![GitHub Stars](https://img.shields.io/github/stars/KerYagciHTL/HtmlForge?style=for-the-badge&logo=github)](https://github.com/KerYagciHTL/HtmlForge/stargazers)
   [![GitHub Forks](https://img.shields.io/github/forks/KerYagciHTL/HtmlForge?style=for-the-badge&logo=github)](https://github.com/KerYagciHTL/HtmlForge/network/members)
