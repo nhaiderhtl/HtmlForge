@@ -250,6 +250,7 @@ public class MyElement
 ### Prerequisites
 - Java 21 or higher
 - Maven 3.6+
+- Python (for scripts)
 
 ### Build the Project
 
