@@ -36,7 +36,6 @@ def print_info(message):
 
 
 def ensure_files_exist():
-    """Check if themes.json and index.html exist"""
     if not os.path.isfile('themes.json'):
         print_warning("Warning: themes.json not found in current directory")
         print("Attempting to navigate to themes directory...")
@@ -57,7 +56,6 @@ def ensure_files_exist():
 
 
 def load_themes():
-    """Load themes from themes.json"""
     print_info("Loading themes from themes.json...")
     try:
         with open('themes.json', 'r') as f:
@@ -76,7 +74,6 @@ def load_themes():
 
 
 def create_backup(filename):
-    """Create a backup of the file"""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     backup_file = f"{filename}.backup.{timestamp}"
 
@@ -90,7 +87,6 @@ def create_backup(filename):
 
 
 def generate_preview_iframe_content(theme_name, theme_css):
-    """Generate a complete HTML page for iframe preview"""
     html_content = f"""<!DOCTYPE html>
 <html>
 <head>
@@ -112,15 +108,12 @@ def generate_preview_iframe_content(theme_name, theme_css):
 
 
 def generate_theme_card_html(theme_key, theme_data):
-    """Generate HTML for a theme preview card with iframe"""
     theme_name = theme_data.get('name', theme_key)
     theme_description = theme_data.get('description', 'No description available')
     theme_tags = theme_data.get('tags', [])
     theme_css = theme_data.get('css', '')
 
-    # Generate iframe content
     iframe_content = generate_preview_iframe_content(theme_name, theme_css)
-    # Base64 encode for data URL to avoid issues with newlines in srcdoc attribute
     import base64
     iframe_data = base64.b64encode(iframe_content.encode('utf-8')).decode('utf-8')
 
@@ -155,21 +148,18 @@ def generate_theme_card_html(theme_key, theme_data):
 
 
 def update_index_html(themes):
-    """Update index.html with all theme preview cards"""
     print_info("Updating index.html with theme previews...")
 
     try:
         with open('index.html', 'r') as f:
             html_content = f.read()
 
-        # Update .theme-preview height to 500px
         preview_style_pattern = '.theme-preview {\n            height: 320px;'
         preview_style_replacement = '.theme-preview {\n            height: 500px;'
 
         if preview_style_pattern in html_content:
             html_content = html_content.replace(preview_style_pattern, preview_style_replacement)
 
-        # Add iframe styles if not present
         iframe_styles = """
         /* Theme Preview Iframe Styles - Auto-generated */
         .theme-preview-iframe {
@@ -180,13 +170,11 @@ def update_index_html(themes):
         }
         /* End Theme Preview Iframe Styles */"""
 
-        # Find the position to insert iframe styles (before closing </style>)
         style_end_pos = html_content.rfind('</style>')
         if style_end_pos == -1:
             print_error("Error: Could not find </style> tag in index.html")
             return False
 
-        # Check if iframe styles already exist and remove them
         iframe_start_marker = "/* Theme Preview Iframe Styles - Auto-generated */"
         iframe_end_marker = "/* End Theme Preview Iframe Styles */"
 
@@ -194,11 +182,9 @@ def update_index_html(themes):
         if iframe_start != -1:
             iframe_end = html_content.find(iframe_end_marker)
             if iframe_end != -1:
-                # Remove old iframe styles
                 html_content = html_content[:iframe_start] + html_content[iframe_end + len(iframe_end_marker):]
                 style_end_pos = html_content.rfind('</style>')
 
-        # Remove old auto-generated preview styles if they exist
         old_preview_start = html_content.find("/* Theme Preview Styles - Auto-generated */")
         if old_preview_start != -1:
             old_preview_end = html_content.find("/* End Theme Preview Styles */")
@@ -206,32 +192,25 @@ def update_index_html(themes):
                 html_content = html_content[:old_preview_start] + html_content[old_preview_end + len("/* End Theme Preview Styles */"):]
                 style_end_pos = html_content.rfind('</style>')
 
-        # Insert iframe styles
         html_content = html_content[:style_end_pos] + "\n" + iframe_styles + "\n    " + html_content[style_end_pos:]
 
-        # Generate theme cards HTML
         all_cards_html = ""
         for theme_key, theme_data in themes.items():
             card_html = generate_theme_card_html(theme_key, theme_data)
             all_cards_html += card_html + "\n"
 
-        # Find the theme-grid section and replace its content
         grid_start = html_content.find('<div class="theme-grid">')
         if grid_start == -1:
             print_error("Error: Could not find theme-grid div in index.html")
             return False
 
-        # Find the actual end of theme-grid (need to skip nested divs)
         depth = 1
         pos = grid_start + len('<div class="theme-grid">')
         while depth > 0 and pos < len(html_content):
-            # Check for opening div tag
             if html_content[pos:pos+4] == '<div':
-                # Make sure it's actually a div tag, not something else
                 next_char = html_content[pos+4:pos+5]
                 if next_char in [' ', '>']:
                     depth += 1
-            # Check for closing div tag
             elif html_content[pos:pos+6] == '</div>':
                 depth -= 1
                 if depth == 0:
@@ -243,12 +222,9 @@ def update_index_html(themes):
             print_error("Error: Could not find end of theme-grid div")
             return False
 
-        # Replace the content of theme-grid
         new_grid_content = f'<div class="theme-grid">{all_cards_html}\n        </div>'
-        # Only replace from grid_start to grid_end+6 (grid_end+6 includes </div>)
         html_content = html_content[:grid_start] + new_grid_content + html_content[grid_end + 6:]
 
-        # Write updated HTML
         with open('index.html', 'w') as f:
             f.write(html_content)
 
@@ -280,16 +256,12 @@ def print_success_message():
 def main():
     print_header()
 
-    # Ensure required files exist
     ensure_files_exist()
 
-    # Load themes from themes.json
     themes = load_themes()
 
-    # Create backup of index.html
     backup_file = create_backup('index.html')
 
-    # Update index.html with theme previews
     if update_index_html(themes):
         print_success_message()
         print_success(f"Backup saved at: {backup_file}")
