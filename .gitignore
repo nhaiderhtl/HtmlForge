@@ -43,3 +43,7 @@ generated
 
 ### Mac OS ###
 .DS_Store
+
+# Secrets
+gradle.properties
+gradle/secring.gpg
