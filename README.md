@@ -76,7 +76,7 @@ builder.heading(1, "Welcome to HtmlForge!")
 <dependency>
   <groupId>io.github.htmlforge-team</groupId>
   <artifactId>htmlforge</artifactId>
-  <version>0.1.0</version>
+  <version>0.2.2</version>
 </dependency>
 ```
 
@@ -87,7 +87,7 @@ builder.heading(1, "Welcome to HtmlForge!")
 
 ```groovy
 dependencies {
-    implementation("io.github.htmlforge-team:htmlforge:0.1.0")
+    implementation("io.github.htmlforge-team:htmlforge:0.2.2")
 }
 ```
 
@@ -98,7 +98,7 @@ dependencies {
 
 ```kotlin
 dependencies {
-    implementation("io.github.htmlforge-team:htmlforge:0.1.0")
+    implementation("io.github.htmlforge-team:htmlforge:0.2.2")
 }
 ```
 
