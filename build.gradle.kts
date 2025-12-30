@@ -4,6 +4,7 @@ plugins {
     id("java-library")
     id("application")
     id("com.vanniktech.maven.publish") version "0.28.0"
+    id("org.jetbrains.kotlin.jvm") version "2.1.0"
 }
 
 group = "io.github.htmlforge-team"
@@ -14,6 +15,7 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib")
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
@@ -25,8 +27,16 @@ java {
     }
 }
 
+kotlin {
+    jvmToolchain(21)
+}
+
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = "21"
+}
+
 application {
-    mainClass.set("team.htmlforge.Main")
+    mainClass.set("team.htmlforge.MainKt")
 }
 
 tasks.test {

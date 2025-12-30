@@ -1,9 +1,11 @@
 <div align="center">
   <img src="assets/htmlforge-icon.png" alt="HtmlForge Logo" width="200"/>
   
-  **A fluent Java library for building HTML programmatically**
+  **A fluent Kotlin library for building HTML programmatically**
   
-  [![Maven Central](https://img.shields.io/maven-central/v/io.github.htmlforge-team/htmlforge?style=for-the-badge&logo=apache-maven&logoColor=white)](https://central.sonatype.com/artifact/io.github.htmlforge-team/htmlforge)
+
+  
+  [![Maven Central](https://img.shields.io/maven-central/v/io.github.htmlforge-team/htmlforge?style=for-the-badge&logo=apache-maven&logoColor=white)](https://central.sonatype.com/artifact/io.github.htmlforge-team/htmlforge)  [![Tests](https://github.com/htmlforge-team/HtmlForge/actions/workflows/ci.yml/badge.svg)](https://github.com/htmlforge-team/HtmlForge/actions/workflows/ci.yml)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
   [![Java Version](https://img.shields.io/badge/Java-21%2B-orange?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
   
@@ -54,13 +56,13 @@
 
 ## Quick Start
 
-```java
-HtmlBuilder builder = new HtmlBuilder("My First Page");
+```kotlin
+val builder = HtmlBuilder("My First Page")
 
 builder.heading(1, "Welcome to HtmlForge!")
-       .paragraph("Building HTML has never been this easy.")
+       .paragraph("Building HTML has never this easy.")
        .link("https://github.com/htmlforge-team/HtmlForge", "Star us on GitHub")
-       .build();
+       .build()
 ```
 
 **Output:** A complete, valid HTML5 document ready to use!
@@ -108,15 +110,15 @@ dependencies {
 
 Apply professional, pre-built themes to your HTML with a single line of code!
 
-```java
-HtmlBuilder builder = new HtmlBuilder("Styled Page");
-builder.useTheme(Theme.CODIX);  // Dark developer theme
+```kotlin
+val builder = HtmlBuilder("Styled Page")
+builder.useTheme(Theme.CODIX)  // Dark developer theme
 // or
-builder.useTheme(Theme.MINIMAL);  // Clean minimal theme
+builder.useTheme(Theme.MINIMAL)  // Clean minimal theme
 
 builder.heading(1, "Beautifully Styled!")
        .paragraph("Themes handle all the CSS for you.")
-       .build();
+       .build()
 ```
 
 ### Available Themes
@@ -127,9 +129,9 @@ builder.heading(1, "Beautifully Styled!")
 | **MINIMAL** | Clean, lightweight | Landing pages, simple sites |
 
 **Resources:**
-- [**Theme Gallery**](https://keryagcihtl.github.io/HtmlForge/themes) - Browse themes with live previews
+- [**Theme Gallery**](https://htmlforge-team.github.io/HtmlForge/themes) - Browse themes with live previews
 - [**Create Custom Themes**](themes/README.md) - Full theme documentation
-- [**JSON API**](https://keryagcihtl.github.io/HtmlForge/themes/themes.json) - Theme data endpoint
+- [**JSON API**](https://htmlforge-team.github.io/HtmlForge/themes/themes.json) - Theme data endpoint
 
 ---
 
@@ -137,57 +139,57 @@ builder.heading(1, "Beautifully Styled!")
 
 ### Basic Document
 
-```java
-HtmlBuilder builder = new HtmlBuilder("My Page");
+```kotlin
+val builder = HtmlBuilder("My Page")
 
-builder.addElement(new Heading(1, "Welcome"));
-builder.addElement(new Paragraph("This is so much easier than strings."));
-builder.addElement(new Link("https://github.com/htmlforge-team/HtmlForge", "Check it out"));
+builder.addElement(Heading(1, "Welcome"))
+builder.addElement(Paragraph("This is so much easier than strings."))
+builder.addElement(Link("https://github.com/htmlforge-team/HtmlForge", "Check it out"))
 
-builder.build();
+builder.build()
 ```
 
 ### Fluent API Style
 
-```java
-new HtmlBuilder("Blog Post")
+```kotlin
+HtmlBuilder("Blog Post")
     .heading(1, "My Amazing Blog Post")
     .paragraph("Here's some content...")
     .image("hero.jpg", "Hero image")
     .heading(2, "Section Title")
     .paragraph("More content here...")
     .link("https://example.com", "Read more")
-    .build();
+    .build()
 ```
 
 ### Form Example
 
-```java
-new HtmlBuilder("Contact Form")
+```kotlin
+HtmlBuilder("Contact Form")
     .heading(1, "Contact Us")
-    .addElement(new Input("text", "name", "Your Name"))
-    .addElement(new Input("email", "email", "your@email.com"))
-    .addElement(new Textarea("message", "Your message...", 5, 40))
-    .addElement(new Button("Submit", "submitForm()"))
-    .build();
+    .addElement(Input("text", "name", "Your Name"))
+    .addElement(Input("email", "email", "your@email.com"))
+    .addElement(Textarea("message", "Your message...", 5, 40))
+    .addElement(Button("Submit", "submitForm()"))
+    .build()
 ```
 
 ### Lists
 
-```java
+```kotlin
 // Unordered list
-builder.addElement(new ListElement(false, 
-    "First item", 
-    "Second item", 
+builder.addElement(ListElement(false,
+    "First item",
+    "Second item",
     "Third item"
-));
+))
 
 // Ordered list
-builder.addElement(new ListElement(true, 
-    "Step 1: Install", 
-    "Step 2: Configure", 
+builder.addElement(ListElement(true,
+    "Step 1: Install",
+    "Step 2: Configure",
     "Step 3: Build"
-));
+))
 ```
 
 ---
