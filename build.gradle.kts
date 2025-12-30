@@ -36,7 +36,7 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 }
 
 application {
-    mainClass.set("team.htmlforge.Main")
+    mainClass.set("team.htmlforge.MainKt")
 }
 
 tasks.test {
