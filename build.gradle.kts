@@ -4,7 +4,7 @@ plugins {
     id("java-library")
     id("application")
     id("com.vanniktech.maven.publish") version "0.28.0"
-    id("org.jetbrains.kotlin.jvm") version "1.9.10"
+    id("org.jetbrains.kotlin.jvm") version "2.1.0"
 }
 
 group = "io.github.htmlforge-team"
