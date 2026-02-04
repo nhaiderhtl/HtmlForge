@@ -1,147 +1,326 @@
-# HtmlForge
+<div align="center">
+  <img src="assets/htmlforge-icon.png" alt="HtmlForge Logo" width="200"/>
+  
+  **A fluent Kotlin library for building HTML programmatically**
+  
 
-A Java library that makes building HTML way easier. Tired of writing HTML as strings? Yeah, me too.
+  
+  [![Maven Central](https://img.shields.io/maven-central/v/io.github.htmlforge-team/htmlforge?style=for-the-badge&logo=apache-maven&logoColor=white)](https://central.sonatype.com/artifact/io.github.htmlforge-team/htmlforge)  [![Tests](https://github.com/htmlforge-team/HtmlForge/actions/workflows/ci.yml/badge.svg)](https://github.com/htmlforge-team/HtmlForge/actions/workflows/ci.yml)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+  [![Java Version](https://img.shields.io/badge/Java-21%2B-orange?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+  
+  [![GitHub Stars](https://img.shields.io/github/stars/htmlforge-team/HtmlForge?style=for-the-badge&logo=github)](https://github.com/htmlforge-team/HtmlForge/stargazers)
+  [![GitHub Forks](https://img.shields.io/github/forks/htmlforge-team/HtmlForge?style=for-the-badge&logo=github)](https://github.com/htmlforge-team/HtmlForge/network/members)
+  [![GitHub Issues](https://img.shields.io/github/issues/htmlforge-team/HtmlForge?style=for-the-badge&logo=github)](https://github.com/htmlforge-team/HtmlForge/issues)
+  [![Contributors](https://img.shields.io/github/contributors/htmlforge-team/HtmlForge?style=for-the-badge&logo=github)](https://github.com/htmlforge-team/HtmlForge/graphs/contributors)
+  
+  [Live Demo](https://htmlforge-team.github.io/HtmlForge/) • [Theme Gallery](https://htmlforge-team.github.io/HtmlForge/themes)
+  
+</div>
 
-## What's this?
+---
 
-If you're a backend developer who's ever had to write HTML, you know the pain. String concatenation everywhere, escaped quotes making your eyes hurt, and messy code that's impossible to maintain. HtmlForge changes the game! Just create objects for your HTML elements, compose them together, and you're done. Clean, readable, and actually enjoyable to work with.
+## Table of Contents
 
-## Quick Look
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Installation](#installation)
+- [Theme System](#theme-system)
+- [Usage Examples](#usage-examples)
+- [Available Elements](#available-elements)
+- [Building & Running](#building--running)
+- [Contributing](#contributing)
+- [License](#license)
 
-```java
-HtmlBuilder builder = new HtmlBuilder("My Page");
+---
 
-builder.addElement(new Heading(1, "Welcome"));
-builder.addElement(new Paragraph("This is so much easier than strings."));
-builder.addElement(new Link("https://github.com", "Check it out"));
+## Features
 
-builder.build();
+<div align="center">
+
+| **Type-Safe** | **Themeable** | **Fluent API** | **Zero Dependencies** |
+|:---:|:---:|:---:|:---:|
+| Catch errors at compile time | Beautiful pre-built themes | Chain methods elegantly | Lightweight & fast |
+
+</div>
+
+- **No more string concatenation** - Build HTML with clean, readable Java code
+- **IDE autocomplete support** - IntelliSense helps you write code faster
+- **Type-safe** - Catch mistakes at compile time, not runtime
+- **Fluent API** - Chain methods for clean, expressive code
+- **Built-in theme system** - Professional styling with one line of code
+- **Extensible** - Easy to add custom elements
+- **Well-tested** - Comprehensive test coverage
+
+---
+
+## Quick Start
+
+```kotlin
+val builder = HtmlBuilder("My First Page")
+
+builder.heading(1, "Welcome to HtmlForge!")
+       .paragraph("Building HTML has never this easy.")
+       .link("https://github.com/htmlforge-team/HtmlForge", "Star us on GitHub")
+       .build()
 ```
 
-That's it. It generates proper HTML for you.
+**Output:** A complete, valid HTML5 document ready to use!
 
-## How it Works
+---
 
-Every HTML element is a class. They all implement the `Element` interface, which basically just means they know how to turn themselves into HTML. You create the elements you want, add them to a builder, and boom – HTML document.
+## Installation
 
-### Basic Elements
+<details open>
+<summary><b>Maven</b></summary>
 
-```java
-// Text stuff
-new Heading(1, "Big title");
-new Paragraph("Just some text");
-new Strong("Make it bold");
-new Emphasis("Or italic");
-
-// Links and images
-new Link("https://example.com", "Click me");
-new Image("cat.jpg", "A cute cat");
-
-// Buttons
-new Button("Click here");
-new Button("Alert", "alert('Hi!')");
-
-// Containers for grouping stuff
-new Div("Put things in here");
+```xml
+<dependency>
+  <groupId>io.github.htmlforge-team</groupId>
+  <artifactId>htmlforge</artifactId>
+  <version>0.3.3</version>
+</dependency>
 ```
 
-### Forms
+</details>
 
-```java
-new Input("text", "username", "Your name");
-new Input("email", "email", "your@email.com");
-new Textarea("message", "Type something", 5, 40);
+<details>
+<summary><b>Gradle (Groovy)</b></summary>
+
+```groovy
+dependencies {
+    implementation("io.github.htmlforge-team:htmlforge:0.3.3")
+}
+```
+
+</details>
+
+<details>
+<summary><b>Gradle (Kotlin DSL)</b></summary>
+
+```kotlin
+dependencies {
+    implementation("io.github.htmlforge-team:htmlforge:0.3.3")
+}
+```
+
+</details>
+
+## Theme System
+
+Apply professional, pre-built themes to your HTML with a single line of code!
+
+```kotlin
+val builder = HtmlBuilder("Styled Page")
+builder.useTheme(Theme.CODIX)  // Dark developer theme
+// or
+builder.useTheme(Theme.MINIMAL)  // Clean minimal theme
+
+builder.heading(1, "Beautifully Styled!")
+       .paragraph("Themes handle all the CSS for you.")
+       .build()
+```
+
+### Available Themes
+
+| Theme | Style | Best For |
+|-------|-------|----------|
+| **CODIX** | Dark, developer-focused | Documentation, code examples |
+| **MINIMAL** | Clean, lightweight | Landing pages, simple sites |
+
+**Resources:**
+- [**Theme Gallery**](https://htmlforge-team.github.io/HtmlForge/themes) - Browse themes with live previews
+- [**Create Custom Themes**](themes/README.md) - Full theme documentation
+- [**JSON API**](https://htmlforge-team.github.io/HtmlForge/themes/themes.json) - Theme data endpoint
+
+---
+
+## Usage Examples
+
+### Basic Document
+
+```kotlin
+val builder = HtmlBuilder("My Page")
+
+builder.addElement(Heading(1, "Welcome"))
+builder.addElement(Paragraph("This is so much easier than strings."))
+builder.addElement(Link("https://github.com/htmlforge-team/HtmlForge", "Check it out"))
+
+builder.build()
+```
+
+### Fluent API Style
+
+```kotlin
+HtmlBuilder("Blog Post")
+    .heading(1, "My Amazing Blog Post")
+    .paragraph("Here's some content...")
+    .image("hero.jpg", "Hero image")
+    .heading(2, "Section Title")
+    .paragraph("More content here...")
+    .link("https://example.com", "Read more")
+    .build()
+```
+
+### Form Example
+
+```kotlin
+HtmlBuilder("Contact Form")
+    .heading(1, "Contact Us")
+    .addElement(Input("text", "name", "Your Name"))
+    .addElement(Input("email", "email", "your@email.com"))
+    .addElement(Textarea("message", "Your message...", 5, 40))
+    .addElement(Button("Submit", "submitForm()"))
+    .build()
 ```
 
 ### Lists
 
-```java
-// Bullet list
-new ListElement(false, "First thing", "Second thing", "Third thing");
+```kotlin
+// Unordered list
+builder.addElement(ListElement(false,
+    "First item",
+    "Second item",
+    "Third item"
+))
 
-// Numbered list  
-new ListElement(true, "Step 1", "Step 2", "Step 3");
+// Ordered list
+builder.addElement(ListElement(true,
+    "Step 1: Install",
+    "Step 2: Configure",
+    "Step 3: Build"
+))
 ```
 
-## What You Can Build With
+---
 
-**Text Elements**
-- `Heading` - H1 through H6, you pick the number
-- `Paragraph` - Regular text
+## Available Elements
+
+<table>
+<tr>
+<td valign="top" width="33%">
+
+### Text Elements
+- `Heading` - H1-H6 headings
+- `Paragraph` - Text paragraphs
 - `Strong` - Bold text
 - `Emphasis` - Italic text
-- `Code` - For showing code snippets
-- `BlockQuote` - Quotes and stuff
+- `Code` - Inline code
+- `BlockQuote` - Quotations
 
-**Interactive Stuff**
-- `Link` - Links to other pages
-- `Button` - Buttons that can run JavaScript
-- `Input` - Text fields, email, password, whatever
-- `Textarea` - Bigger text boxes
+</td>
+<td valign="top" width="33%">
 
-**Layout**
-- `Div` - The classic container
-- `ListElement` - Ordered or unordered lists
-- `HorizontalRule` - Those `<hr>` lines
+### Interactive
+- `Link` - Hyperlinks
+- `Button` - Buttons with JS
+- `Input` - Form inputs
+- `Textarea` - Text areas
 
-**Media**
-- `Image` - Pictures (works with URLs and local files)
+### Layout
+- `Div` - Containers
+- `ListElement` - Lists (ul/ol)
+- `HorizontalRule` - Dividers
 
-## Adding Your Own Elements
+</td>
+<td valign="top" width="33%">
 
-Want to create a custom element? Just implement the `Element` interface:
+### Media
+- `Image` - Images (URL/local)
+
+### Extensibility
+Create custom elements by implementing the `Element` interface:
 
 ```java
-public class MyElement implements Element {
-    @Override
-    public String toHtml() {
-        return "<whatever>your html here</whatever>";
-    }
+public class MyElement 
+    implements Element {
+  @Override
+  public String toHtml() {
+    return "<tag>content</tag>";
+  }
 }
 ```
 
-Then use it like any other element. Easy.
+</td>
+</tr>
+</table>
 
-## The Files
+---
 
-```
-src/main/java/dev/kxrim/
-├── HtmlBuilder.java          # The main class that builds everything
-├── Main.java                 # Example of how to use it
-└── elements/                 # All the HTML elements
-    ├── Element.java          # The interface everyone implements
-    ├── Div.java
-    ├── Paragraph.java
-    └── ... all the others
-```
+## Building & Running
 
-## Running the Example
+### Prerequisites
+- Java 21 or higher
+- Python (for scripts)
+
+### Build the Project
 
 ```bash
-mvn compile
-mvn exec:java -Dexec.mainClass="dev.kxrim.Main"
+./gradlew build
 ```
 
-Check the `generated/` folder for your HTML file.
+### Run the Example
 
-## Why This Exists
+```bash
+./gradlew run
+```
 
-Because writing HTML in Java strings sucks. This way you get:
-- No more escaping quotes everywhere
-- Your IDE actually helps you with autocomplete
-- Catch mistakes when you compile, not when you run
-- Easier to read and modify
+Generated HTML will be in the `generated/` folder.
+
+### Run Tests
+
+```bash
+./gradlew test
+```
+
+---
 
 ## Contributing
-- Kerimcan Yagci
-- Nico Haider
 
-If you want to add more elements or fix something, go for it. The code is pretty straightforward. Just make sure to test your changes before submitting.
+We love contributions! Whether it's bug fixes, new features, or documentation improvements.
+
+**[Read our Contributing Guide](CONTRIBUTING.md)** for detailed information on how to get started.
+
+### Contributors
+
+<a href="https://github.com/htmlforge-team/HtmlForge/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=htmlforge-team/HtmlForge" />
+</a>
+
+**Core Team:**
+- [Kerimcan Yagci](https://github.com/KerYagciHTL) - Creator & Maintainer
+- [Nico Haider](https://github.com/nhaiderhtl) - Tests Contributor
+- [Julian Mostbauer](https://github.com/Julian-Mostbauer) - Scripting Contributor
+
+### How to Contribute
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes and test them
+4. Commit your changes (`git commit -m 'Add amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+---
 
 ## License
 
-MIT License with Attribution
+[MIT License with Attribution](https://mit-license.org/)
 
-You're free to use, modify, and distribute this software. If you make changes or use it in your project, just give credit to the original author (KerYagciHTL). That's it.
+**TL;DR:** Use it however you want, just keep the credits if you modify or redistribute it.
 
-**TL;DR**: Use it however you want, just keep the credits if you modify or redistribute it.
+---
+
+<div align="center">
+
+### Star Us!
+
+If you find HtmlForge helpful, please consider giving us a star on GitHub!
+
+[![Star History Chart](https://api.star-history.com/svg?repos=htmlforge-team/HtmlForge&type=Date)](https://star-history.com/#htmlforge-team/HtmlForge&Date)
+
+**Made with care by the HtmlForge Team**
+
+[Report Bug](https://github.com/htmlforge-team/HtmlForge/issues) • [Request Feature](https://github.com/htmlforge-team/HtmlForge/issues)
+
+</div>
